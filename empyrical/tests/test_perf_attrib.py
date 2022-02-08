@@ -72,9 +72,9 @@ class PerfAttribTestCase(unittest.TestCase):
                                                               factor_returns,
                                                               factor_loadings)
 
-        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output, check_freq=False)
+        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output)
 
-        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio, check_freq=False)
+        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio)
 
         # test long and short positions
         positions = pd.Series([0.5, -0.5, 0.5, -0.5], index=index)
@@ -105,9 +105,9 @@ class PerfAttribTestCase(unittest.TestCase):
                   'risk_factor2': [0.0, 0.0]}
         )
 
-        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output, check_freq=False)
+        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output)
 
-        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio, check_freq=False)
+        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio)
 
         # test long and short positions with tilt exposure
         positions = pd.Series([1.0, -0.5, 1.0, -0.5], index=index)
@@ -138,9 +138,9 @@ class PerfAttribTestCase(unittest.TestCase):
                   'risk_factor2': [0.125, 0.125]}
         )
 
-        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output, check_freq=False)
+        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output)
 
-        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio, check_freq=False)
+        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio)
 
     def test_perf_attrib_regression(self):
 
@@ -204,7 +204,7 @@ class PerfAttribTestCase(unittest.TestCase):
             factor_returns, axis='rows'
         ).sum(axis='columns')
 
-        assert_series_equal(expected_common_returns, common_returns, 
+        assert_series_equal(expected_common_returns, common_returns,
                             check_names=False)
 
         # since factor loadings are ones, portfolio risk exposures

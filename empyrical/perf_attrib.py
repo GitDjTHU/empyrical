@@ -111,7 +111,7 @@ def perf_attrib(returns,
         ('specific_returns', specific_returns),
         ('tilt_returns', tilt_returns),
         ('timing_returns', timing_returns)
-        ]))
+    ]))
 
     return (risk_exposures_portfolio,
             pd.concat([perf_attrib_by_factor, returns_df], axis='columns'))
@@ -158,4 +158,6 @@ def compute_exposures(positions, factor_loadings):
             2017-01-02  0.821872  1.520515
     """
     risk_exposures = factor_loadings.multiply(positions, axis='rows')
-    return risk_exposures.groupby(level='dt').sum()
+    index_dt = risk_exposures.index.levels[0]
+
+    return risk_exposures.groupby(level=0).sum().set_index(index_dt)
