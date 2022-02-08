@@ -8,20 +8,25 @@ Common financial risk metrics.
 
 ## Table of Contents
 
-- [Installation](#installation)
-- [Usage](#usage)
-- [Support](#support)
-- [Contributing](#contributing)
-- [Testing](#testing)
+- [empyrical](#empyrical)
+  - [Table of Contents](#table-of-contents)
+  - [Installation](#installation)
+  - [Usage](#usage)
+  - [Support](#support)
+    - [Deprecated: Data Reading via `pandas-datareader`](#deprecated-data-reading-via-pandas-datareader)
+  - [Contributing](#contributing)
+  - [Testing](#testing)
 
 ## Installation
-```
+
+```shell
 pip install empyrical
 ```
 
 ## Usage
 
 Simple Statistics
+
 ```python
 import numpy as np
 from empyrical import max_drawdown, alpha_beta

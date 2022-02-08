@@ -1,8 +1,14 @@
-import numpy as np
-import pandas as pd
 import unittest
 
+import numpy as np
+import pandas as pd
+
 from empyrical.perf_attrib import perf_attrib
+
+try:
+    from pandas.testing import assert_frame_equal, assert_series_equal
+except ImportError:
+    from pandas.util.testing import assert_frame_equal, assert_series_equal
 
 
 class PerfAttribTestCase(unittest.TestCase):
@@ -66,11 +72,9 @@ class PerfAttribTestCase(unittest.TestCase):
                                                               factor_returns,
                                                               factor_loadings)
 
-        pd.util.testing.assert_frame_equal(expected_perf_attrib_output,
-                                           perf_attrib_output)
+        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output, check_freq=False)
 
-        pd.util.testing.assert_frame_equal(expected_exposures_portfolio,
-                                           exposures_portfolio)
+        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio, check_freq=False)
 
         # test long and short positions
         positions = pd.Series([0.5, -0.5, 0.5, -0.5], index=index)
@@ -101,11 +105,9 @@ class PerfAttribTestCase(unittest.TestCase):
                   'risk_factor2': [0.0, 0.0]}
         )
 
-        pd.util.testing.assert_frame_equal(expected_perf_attrib_output,
-                                           perf_attrib_output)
+        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output, check_freq=False)
 
-        pd.util.testing.assert_frame_equal(expected_exposures_portfolio,
-                                           exposures_portfolio)
+        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio, check_freq=False)
 
         # test long and short positions with tilt exposure
         positions = pd.Series([1.0, -0.5, 1.0, -0.5], index=index)
@@ -136,11 +138,9 @@ class PerfAttribTestCase(unittest.TestCase):
                   'risk_factor2': [0.125, 0.125]}
         )
 
-        pd.util.testing.assert_frame_equal(expected_perf_attrib_output,
-                                           perf_attrib_output)
+        assert_frame_equal(expected_perf_attrib_output, perf_attrib_output, check_freq=False)
 
-        pd.util.testing.assert_frame_equal(expected_exposures_portfolio,
-                                           exposures_portfolio)
+        assert_frame_equal(expected_exposures_portfolio, exposures_portfolio, check_freq=False)
 
     def test_perf_attrib_regression(self):
 
@@ -189,16 +189,12 @@ class PerfAttribTestCase(unittest.TestCase):
 
         # since all returns are factor returns, common returns should be
         # equivalent to total returns, and specific returns should be 0
-        pd.util.testing.assert_series_equal(returns,
-                                            common_returns,
-                                            check_names=False)
+        assert_series_equal(returns, common_returns, check_names=False)
 
         self.assertTrue(np.isclose(specific_returns, 0).all())
 
         # specific and common returns combined should equal total returns
-        pd.util.testing.assert_series_equal(returns,
-                                            combined_returns,
-                                            check_names=False)
+        assert_series_equal(returns, combined_returns, check_names=False)
 
         # check that residuals + intercepts = specific returns
         self.assertTrue(np.isclose((residuals + intercepts), 0).all())
@@ -208,13 +204,12 @@ class PerfAttribTestCase(unittest.TestCase):
             factor_returns, axis='rows'
         ).sum(axis='columns')
 
-        pd.util.testing.assert_series_equal(expected_common_returns,
-                                            common_returns,
-                                            check_names=False)
+        assert_series_equal(expected_common_returns, common_returns, 
+                            check_names=False)
 
         # since factor loadings are ones, portfolio risk exposures
         # should be ones
-        pd.util.testing.assert_frame_equal(
+        assert_frame_equal(
             risk_exposures_portfolio,
             pd.DataFrame(np.ones_like(risk_exposures_portfolio),
                          index=risk_exposures_portfolio.index,

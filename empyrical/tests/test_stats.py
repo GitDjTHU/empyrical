@@ -190,7 +190,8 @@ class TestStats(BaseTestCase):
                 cum_returns[i],
                 expected[i],
                 4)
-
+        if isinstance(cum_returns, np.ndarray):
+            print(cum_returns)
         self.assert_indexes_match(cum_returns, returns)
 
     @parameterized.expand([
